@@ -1,7 +1,7 @@
 language: java
 cache:
   directories:
-  - $HOME/.m2
+  - "$HOME/.m2"
 jdk:
 - oraclejdk8
 sudo: required
@@ -9,16 +9,18 @@ services:
 - docker
 notifications:
   slack:
+    secure: Ke5hrmC75hqjh9m+biEUIYMRrjFP031xt0hhZ/u1+UIwj+66ZnX+dvJMNW6D8Q5qg2tiQYlAW/bXh3IMLCOolWdIXc68gm/9kNxgOqcFvSLNZYbaF4Gux56JIykiMWxBPYTzWFNn/lRHvYvCy4gkFL36S39JKo7WSQziRR6cs4mFo25sZD6HWTGjIjlVC/21d4DPWeLckGPsMi/SdqTl56VVtgwdxVhhEl1lSY8KGUI7QQ/hV8ItnYTIYZwpqw9j3ezLhUAhsZglnW+XcOnim9QdWLlxIMj4hKB+n2Pdkg8hgTGnTu7+6S77eCo3PPOawveQLsOM0LdUJI0vjU4k4WYYdeqElSFfAHTsxWQreaU//ieaR+/UwNFfOSIU32UE87xGOJzoYJi/R2YQhHBh9KiIeeAq83Zx9A+B1NOIytaJJd2Lw6jrC/wXuP9ItJFq7TMyiq08dguWfJ5FwX/ZF102BF/Q6bUcHGmyUZ/JzxBNzCI/XlH6BGuXzir8j8ryjeUGdF2CMFFahNJsGhYp/RpTEShoROeu1KGQ0r8K05TSCaFYW6gyrUjd1kUNbn9d/naXZqRmurfFIbnsx/Jg2J+TxitarngGthOo/BGlsEYiqHSer0tCJNxgJGtbfiod2VyIz1J7S3dGgL4Hwn0LCM6i2tBgmDek0cxVd1+427g=
   email:
   - anthony.denecheau@gmail.com
   on_success: always
   on_failure: always
 env:
   global:
+  - secure: lTt2pXI/fefkJYYw3+DCM4PgkblTClnxC0H7XMxOUywOVjyILHBEAON4p7FTiXh9IjCosJEtiChADr6Jy+z8homtXuA8PqNganzDZKm+FAXQh9UNo42DgBx2YDdDeGRQHH6uYC2A0iAeQrbfTn/vfCX9IDd5Zb2eY4zG8GQYxgFbk83sliZSA66rtqHMpQU69S+Ncj0IlG0lgSlSwic6DrtNCbtgAdjCRdgiMzBvpCAGWI8CUbfrXszCEZhTPZgGMp7Wi/oiJW+nfRWJYy703pLQAV7fdEJCbD5/pXWmQvsgc6CcPnDEvvUdQ1KERh/6mLpNp3fYHDWuYETV4du2t5I0bBI/FJJj7mvrHbWa5WJpmsn3rKRVw0tZB2WuaLGFDM+tVinGggJPQkL0WDqJDOidY547m3Xe+s09MdmS1DGoGnK26wHFt8Y+r88mlYYtzAAfuLUKfscB1VacLN/L/9EkCA6vtdw8GhDdKpNVxyPhZg2H1XxEtp/+Wm4FdLStambz9ldO4WNYMcVaNXHOL7hpEFa/hcD4ynjZ5D80mO5yxO8VlMBdnk0diMZMbVJDOF+wSVxYSVHus36biY3QvwgN2/SgYen2sYgzFgkKHfjvU7qPdZfj/Iy8VigJuC1izmARfaziDYnFTCdv5FRL8pSAB/sUDq4DboYwk+6m3ls=
+  - secure: hHYfLNYJnfqcwyvpQeMvJKZr/FUQQ2iX1/ImA0CCahOTh27vDrMtg9Nul7mQwv3VDNqpKm6FuBP3UuMpUBGrvUtyFPW3a/x1vEaTrLqgnbzEwDa69Ot2lruzpJSKEwwim3zJGglPpwQHVD18BTibvIYfLuQlXaW7GbkW55uqaObReGzp8zu4iPdHhRqSUz/KJVBAKNzMZ3XrnICOsruzMd2YyFWN3MJcuOtFse7LIafIXZj2rKkv5VWvBEg21w+lF85U6tCodyj7RzgJjWJCQw/jJeHZG2h2icataBdJRgXPK82EqPGXkfyy8R8CX9d2RxkiQdEJWrb7z88KU0kYODDLxgJjEkTjzNdPn9Ad1vcxf0DDB9VL2PtOf9fOc3qqgMX1SIdsnf2YzHRV/HTp5w/brtZKZaQgGKvv3wZh+rNXfgRg4c2QqB+xn0cLJwDpq6rtpu4bY0KgcQnbW4aQvwK1EPSvDxFMlzYpeFK9h+hyFhu7c4JnqB78rbKFTIcdoQhXr3lKT4J49KqO89/NElyORrYgIkYhg/l1IOozLoJ3RduGZC4Zdn+qYc50akhUDyk5mCT88aKgh+SpGOiB3weexAm9Yoy3zZtuysViyLwJ0EyGOKni1MCvV89WEUNhQahKFLVk5wpbVOqHwHpdy1iEtSPeblwXiqKniMfHYJU=
   matrix:
   - SCC_DOCKER_IMAGE=anthonydenecheau/scc-agria-service:version1.0
 script:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - mvn clean package docker:build
 - docker push $SCC_DOCKER_IMAGE
-  
