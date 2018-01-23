@@ -11,7 +11,6 @@ import com.scc.agria.config.ServiceConfig;
 import com.scc.agria.model.Dog;
 import com.scc.agria.repository.DogRepository;
 import com.scc.agria.template.ResponseObjectList;
-import com.scc.agria.utils.UserContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;
