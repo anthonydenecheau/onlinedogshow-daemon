@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "********************************************************"
-echo "Waiting for the database server to start on port $DATABASESERVER_PORT"
+echo "Waiting for the $DATABASESERVER_NAME server to start on port $DATABASESERVER_PORT"
 echo "********************************************************"
 while ! `nc -z $DATABASESERVER_NAME $DATABASESERVER_PORT`; do sleep 3; done
 echo "******** Database Server has started "
