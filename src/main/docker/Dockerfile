@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 RUN  apk update && apk upgrade && apk add netcat-openbsd
-RUN mkdir -p /usr/local/agriaservice
+RUN mkdir -p /usr/local/daemonservice
 ADD @project.build.finalName@.jar /usr/local/daemonservice/
 ADD run.sh run.sh
 RUN chmod +x run.sh
