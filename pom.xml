@@ -3,12 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.scc</groupId>
-  <artifactId>agria-service</artifactId>
+  <artifactId>daemon-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Agria Service</name>
-  <description>Agria Service</description>
+  <name>Daemon Service</name>
+  <description>Daemon Service</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -43,16 +43,6 @@
 
     <dependency>
       <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-eureka</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-feign</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
@@ -60,30 +50,19 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-config-client</artifactId>
     </dependency>
-
+    
+    <!-- Oracle JDBC driver-->
+    <dependency>
+        <groupId>com.oracle</groupId>
+        <artifactId>ojdbc6</artifactId>
+        <version>11.2.0.4</version>
+        <scope>system</scope>
+        <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>        
+    </dependency>
+    
     <dependency>
       <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-hystrix</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>9.1-901.jdbc4</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-rsa</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>com.netflix.hystrix</groupId>
-        <artifactId>hystrix-javanica</artifactId>
-        <version>1.5.9</version>
+      <artifactId>spring-cloud-starter-stream-kafka</artifactId>
     </dependency>
 
     <dependency>
@@ -98,15 +77,15 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-sleuth-zipkin</artifactId>
     </dependency>
-      
+            
   </dependencies>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <start-class>com.scc.agria.Application</start-class>
-    <docker.image.name>anthonydenecheau/scc-agria-service</docker.image.name>
+    <start-class>com.scc.daemon.Application</start-class>
+    <docker.image.name>anthonydenecheau/scc-daemon-service</docker.image.name>
     <docker.image.tag>version1.0</docker.image.tag>
   </properties>
 
