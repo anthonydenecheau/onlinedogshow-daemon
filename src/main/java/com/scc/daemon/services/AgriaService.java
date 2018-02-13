@@ -43,7 +43,7 @@ public class AgriaService {
         	return agriaDogRepository.findByTransfert("N");
         }
         finally{
-            newSpan.tag("peer.service", "oracle");
+            newSpan.tag("peer.service", "agriascheduler");
             newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
             tracer.close(newSpan);        	
         }
@@ -58,7 +58,7 @@ public class AgriaService {
         	return dogRepository.findById(dogId);
         }
         finally{
-            newSpan.tag("peer.service", "postgres");
+            newSpan.tag("peer.service", "agriascheduler");
             newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
             tracer.close(newSpan);        	
         }
@@ -72,41 +72,37 @@ public class AgriaService {
         	return agriaDogRepository.save(dog);
         }
         finally{
-            newSpan.tag("peer.service", "oracle");
+            newSpan.tag("peer.service", "agriascheduler");
             newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
             tracer.close(newSpan);        	        	
         }
     }
     
-    public void refreshDog(int idDog, String action){
-        Span newSpan = tracer.createSpan("refreshDog");
+    public void refreshDog(AgriaDog dog, String action){
+        Span newSpan = tracer.createSpan("publishDogChange");
         logger.debug("In the agriaService.refreshDog() call, trace id: {}", tracer.getCurrentSpan().traceIdString());
     	
-        // Lecture des données maj.
-        AgriaDog dog = new AgriaDog(); 
-        		
     	try {
 
-    		switch(action){
-            	case "U":
-            		dog = getDogById(idDog);
-            		simpleSourceBean.publishDogChange("UPDATE", dog);
-            		break;
-            	case "I":
-            		dog = getDogById(idDog);
-            		simpleSourceBean.publishDogChange("SAVE", dog);
-            		break;
-            	case "D":
-            		dog.setId(idDog);
-            		simpleSourceBean.publishDogChange("DELETE", dog);
-            		break;
-                default:
-                    logger.error("Received an UNKNOWN event from the agria service of type {}", action);
-                    break;      
+    		if (dog != null) {
+	    		switch(action){
+	            	case "U":
+	            		simpleSourceBean.publishDogChange("UPDATE", dog);
+	            		break;
+	            	case "I":
+	            		simpleSourceBean.publishDogChange("SAVE", dog);
+	            		break;
+	            	case "D":
+	            		simpleSourceBean.publishDogChange("DELETE", dog);
+	            		break;
+	                default:
+	                    logger.error("Received an UNKNOWN event from the agria service of type {}", action);
+	                    break;      
+	    		}
     		}
         }
         finally{
-            newSpan.tag("peer.service", "kafka");
+            newSpan.tag("peer.service", "agriascheduler");
             newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
             tracer.close(newSpan);          	
         }

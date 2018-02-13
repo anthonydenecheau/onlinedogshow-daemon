@@ -29,7 +29,7 @@ public class SimpleSourceBean {
     }
 
     public void publishDogChange(String action, AgriaDog dog){
-        Span newSpan = tracer.createSpan("publishDogChange");
+        //Span newSpan = tracer.createSpan("publishDogChange");
     	Instant instant = Instant.now();
         logger.debug("Sending Kafka message {} for Dog Id: {} at {} ", action, dog.toString(), instant);
 
@@ -46,9 +46,9 @@ public class SimpleSourceBean {
     
         }
         finally{
-            newSpan.tag("peer.service", "kafka");
-            newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
-            tracer.close(newSpan);          	
+//            newSpan.tag("peer.service", "agriascheduler");
+//            newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
+//            tracer.close(newSpan);          	
         }
     	
     }

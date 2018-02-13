@@ -32,9 +32,6 @@ public class AgriaScheduler {
 	@Scheduled (fixedDelayString = "${fixedDelay.in.milliseconds}")
     public void readDog() {
 
-		Span newSpan = tracer.createSpan("AgriaScheduler");
-        logger.debug("In the agriaScheduler.readDog() call, trace id: {}", tracer.getCurrentSpan().traceIdString());
-
 		try {
         
 	    	//logger.debug("readDog :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
@@ -45,34 +42,44 @@ public class AgriaScheduler {
 	    	dogList = agriaService.getAllDogs();
 	    	logger.debug("readDog :: dogList {}", dogList.size());
 	    	
-	    	// [[Boucle]] s/ le chien
-	    	for (AgriaSyncDog syncDog : dogList) {
-	    		try {
-	    				
-	    	    	// 1. Maj du chien de la table (RAGRIA_SYNC_CHIEN)
-	    			idDog = syncDog.getId();
-	    			syncDog.setTransfert("O");
-	    			agriaService.saveDog(syncDog);
-	    			
-	    	    	// 2. Lecture des infos pour le chien à synchroniser 
-	    			// Note : vue AGRIA_CHIEN (Oracle) == image de la table AGRIA_CHIEN (PostGRE)
-	    			AgriaDog dog = agriaService.getDogById(idDog);
-	    	    	
-	    	    	// 3. Envoi du message à Agria-service pour maj Postgre
-	    			agriaService.refreshDog(idDog, syncDog.getAction());
-	    			
-	    		} catch (Exception e) {
-	    			logger.error(" idDog {} : {}", idDog, e.getMessage());
-	    		} finally {
-	    			
-	    		}
-	    	}	    	
-	    	// [[Boucle]]
+	    	if (dogList.size() > 0 ) {
+		    	// [[Boucle]] s/ le chien
+		    	for (AgriaSyncDog syncDog : dogList) {
+		    		
+		    		Span newSpan = tracer.createSpan("AgriaScheduler");
+		            logger.debug("In the agriaScheduler.readDog() call, trace id: {}", tracer.getCurrentSpan().traceIdString());
+
+		            try {
+		    				
+		    	    	// 1. Maj du chien de la table (RAGRIA_SYNC_CHIEN)
+		    			idDog = syncDog.getId();
+		    			syncDog.setTransfert("O");
+		    			agriaService.saveDog(syncDog);
+		    			
+		    	    	// 2. Lecture des infos pour le chien à synchroniser 
+		    			// Note : vue AGRIA_CHIEN (Oracle) == image de la table AGRIA_CHIEN (PostGRE)
+		    			// Cas particulier du DELETE, dog == null
+		    			AgriaDog dog = new AgriaDog();
+		    			if (!syncDog.getAction().equals("D"))
+		    				dog = agriaService.getDogById(idDog);
+		    			else
+		    				dog.withId(idDog);	
+		    			
+		    	    	// 3. Envoi du message à agria-service pour maj Postgre
+		    			agriaService.refreshDog(dog, syncDog.getAction());
+		    			
+		    		} catch (Exception e) {
+		    			logger.error(" idDog {} : {}", idDog, e.getMessage());
+		    		} finally {
+		    			newSpan.tag("peer.service", "agriascheduler");
+		    			newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
+		    			tracer.close(newSpan);		    			
+		    		}
+		    	}	    	
+		    	// [[Boucle]]
+	    	}
 		
 		} finally {
-			newSpan.tag("peer.service", "scheduler");
-			newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
-			tracer.close(newSpan);
 		}
     }
     
