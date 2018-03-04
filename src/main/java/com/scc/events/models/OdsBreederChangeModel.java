@@ -1,20 +1,20 @@
 package com.scc.events.models;
 
-import com.scc.daemon.model.AgriaDog;
+import com.scc.daemon.model.OdsBreeder;
 
-public class AgriaChangeModel {
+public class OdsBreederChangeModel {
 
     private String type;
     private String action;
-    private AgriaDog dog;
+    private OdsBreeder breeder;
     private String traceId;
     private long timestamp;
 
-    public  AgriaChangeModel(String type, String action, AgriaDog dog, String traceId, long timestamp) {
+    public  OdsBreederChangeModel(String type, String action, OdsBreeder breeder, String traceId, long timestamp) {
         super();
         this.type   = type;
         this.action = action;
-        this.dog = dog;
+        this.breeder = breeder;
         this.traceId = traceId;
         this.timestamp = timestamp;
     }
@@ -25,8 +25,8 @@ public class AgriaChangeModel {
     public String getAction() { return action;}
     public void setAction(String action) {this.action = action; }
 
-    public AgriaDog getDog() { return dog; }
-    public void setDog(AgriaDog dog) { this.dog = dog;}
+    public OdsBreeder getBreeder() { return breeder; }
+    public void setBreeder(OdsBreeder breeder) { this.breeder = breeder;}
 
     public String getTraceId() { return traceId; }
 	public void setTraceId(String traceId) { this.traceId = traceId; }

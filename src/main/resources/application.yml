@@ -1,14 +1,29 @@
-#Default port is 8082
+#Default port is 8083
 server:
-  port: 8082
+  port: 8083
   
 spring:
 #Kafka settings
   cloud:
     stream:
       bindings:
-        output:
-            destination:  dogChangeTopic
+        outboundDogChanges:
+            destination:  dogOdsTopic
+            content-type: application/json
+        outboundOwnerChanges:
+            destination:  ownerOdsTopic
+            content-type: application/json
+        outboundBreederChanges:
+            destination:  breederOdsTopic
+            content-type: application/json
+        outboundTitleChanges:
+            destination:  titleOdsTopic
+            content-type: application/json
+        outboundPedigreeChanges:
+            destination:  pedigreeOdsTopic
+            content-type: application/json
+        outboundParentChanges:
+            destination:  parentOdsTopic
             content-type: application/json
       kafka:
         binder:
