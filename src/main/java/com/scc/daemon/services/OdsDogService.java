@@ -459,7 +459,7 @@ public class OdsDogService {
     public void syncDogInfos() {
     	
     	List<OdsSyncData> dogList = new ArrayList<OdsSyncData>();
-    	long idDog = 0;
+    	long id = 0;
     	
         try {
 
@@ -477,7 +477,7 @@ public class OdsDogService {
 		            try {
 		    				
 		    	    	// 1. Maj du chien de la table (ODS_SYNC_DATA)
-		    			idDog = syncDog.getId();
+		            	id = syncDog.getId();
 		    			syncDog.setTransfert("O");
 		    			saveDog(syncDog);
 		    			
@@ -487,20 +487,20 @@ public class OdsDogService {
 		    			// + DELETE, dog == null -> on publie uniquement l'id à supprimer
 		    			OdsDog dog = new OdsDog();
 		    			if (!syncDog.getAction().equals("D")) {
-		    				dog = getDogById(idDog);
+		    				dog = getDogById(id);
 		    				if (dog == null ) {
 		    					deleteDog(syncDog);
 		    					continue;		    	
 		    				}		    			
 		    			} else
-		    				dog.withId(idDog);	
+		    				dog.withId(id);	
 		    			
 		    	    	// 3. Envoi du message à ods-service pour maj Postgre
 		    			// Pour le chien lui-même, ses titres, ses livres, ses parents, son proprietaire ?	
 		    			refreshDog(dog, syncDog.getAction());
 		    			
 		    		} catch (Exception e) {
-		    			logger.error(" idDog {} : {}", idDog, e.getMessage());
+		    			logger.error(" id {} : {}", id, e.getMessage());
 		    		} finally {
 		    		}
 		    	}	    	
@@ -647,7 +647,7 @@ public class OdsDogService {
     public void syncTitleInfos() {
     	
     	List<OdsSyncData> titles = new ArrayList<OdsSyncData>();
-    	long idTitle = 0;
+    	long id = 0;
     	String country ="";
     	
         try {
@@ -666,7 +666,7 @@ public class OdsDogService {
 		            try {
 
 		    	    	// 1. Maj du titre de la table (ODS_SYNC_DATA)
-		            	idTitle = syncTitle.getId();
+		            	id = syncTitle.getId();
 		            	country = (syncTitle.getDomaine().equals("TITRE_FRANCAIS") ? "FR" : "ETR");
 		            	syncTitle.setTransfert("O");
 		    			saveDog(syncTitle);
@@ -677,19 +677,19 @@ public class OdsDogService {
 		    			// + DELETE, dog == null -> on publie uniquement l'id à supprimer
 		    			OdsTitle title = new OdsTitle();
 		    			if (!syncTitle.getAction().equals("D")) {
-		    				title = getTitleById(idTitle);
+		    				title = getTitleById(id);
 		    				if (title == null) {
 		    					deleteDog(syncTitle);
 		    					continue;		    	
 		    				}		    			
 		    			} else
-		    				title.withId(idTitle);	
+		    				title.withId(id);	
 		    			
 		    	    	// 3. Envoi du message à ods-service pour maj Postgre
 		    			refreshTitle(title, syncTitle.getAction());
 		    			
 		    		} catch (Exception e) {
-		    			logger.error(" idTitle {} : {}", idTitle, e.getMessage());
+		    			logger.error(" id {} : {}", id, e.getMessage());
 		    		} finally {
 		    		}
 		    	}	    	
@@ -711,7 +711,7 @@ public class OdsDogService {
     public void syncPedigreeInfos(){
     	
     	List<OdsSyncData> pedigrees = new ArrayList<OdsSyncData>();
-    	long idPedigree = 0;
+    	long id = 0;
     	
         try {
 
@@ -729,7 +729,7 @@ public class OdsDogService {
 		            try {
 
 		    	    	// 1. Maj du chien de la table (ODS_SYNC_DATA)
-		    			idPedigree = syncPedigree.getId();
+		            	id = syncPedigree.getId();
 		    			syncPedigree.setTransfert("O");
 		    			saveDog(syncPedigree);
 	
@@ -739,19 +739,19 @@ public class OdsDogService {
 		    			// + DELETE, dog == null -> on publie uniquement l'id à supprimer
 		    			OdsPedigree pedigree = new OdsPedigree();
 		    			if (!syncPedigree.getAction().equals("D")) {
-		    				pedigree = getPedigreeById(idPedigree);
+		    				pedigree = getPedigreeById(id);
 		    				if (pedigree == null) {
 		    					deleteDog(syncPedigree);
 		    					continue;		    	
 		    				}		    			
 		    			} else
-		    				pedigree.withId(idPedigree);	
+		    				pedigree.withId(id);	
 		    			
 		    	    	// 3. Envoi du message à ods-service pour maj Postgre
 		    			refreshPedigree(pedigree, syncPedigree.getAction());
 		    			
 		    		} catch (Exception e) {
-		    			logger.error(" idPedigree {} : {}", idPedigree, e.getMessage());
+		    			logger.error(" id {} : {}", id, e.getMessage());
 		    		} finally {
 		    		}
 		    	}	    	

@@ -17,7 +17,7 @@ public class OdsTitle{
 	private int idDog;
 
 	@Column(name = "id_titre", nullable = false)
-	private int idTitre;
+	private int idTitle;
 
 	@Column(name = "code")
 	private String title;
@@ -40,8 +40,8 @@ public class OdsTitle{
 	public int getIdDog() { return idDog; }
 	public void setIdDog(int idDog) { this.idDog = idDog; }
 
-	public int getIdTitre() { return idTitre;}
-	public void setIdTitre(int idTitre) { this.idTitre = idTitre;}
+	public int getIdTitrle() { return idTitle;}
+	public void setIdTitle(int idTitle) { this.idTitle = idTitle;}
 
 	public String getTitle() { return title; }
 	public void setTitle(String title) { this.title = title; }
@@ -60,7 +60,7 @@ public class OdsTitle{
 
 	public OdsTitle withId(long id){ this.setId( id ); return this; }
 	public OdsTitle withIdDog(int idDog){ this.setIdDog(idDog); return this; }
-	public OdsTitle withIdTitre(int idTitre){ this.setIdTitre(idTitre); return this; }
+	public OdsTitle withIdTitle(int idTitle){ this.setIdTitle(idTitle); return this; }
 	public OdsTitle withObtentionDate(String obtentionDate){ this.setObtentionDate(obtentionDate); return this; }
 	public OdsTitle withTitle(String title){ this.setTitle(title); return this; }
 	public OdsTitle withName(String name){ this.setName(name); return this; }

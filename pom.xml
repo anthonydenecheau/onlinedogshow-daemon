@@ -78,14 +78,26 @@
         <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>        
  -->    </dependency>
             
+	<!-- Test -->
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+	</dependency> 
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
   </dependencies>
   
   <repositories>
-  <repository>
-   	<id>project-common</id>
-    <name>Project Common</name>
-    <url>https://github.com/anthonydenecheau/mvn-repo/raw/master/</url>
-  </repository>
+	  <repository>
+	   	<id>project-common</id>
+	    <name>Project Common</name>
+	    <url>https://github.com/anthonydenecheau/mvn-repo/raw/master/</url>
+	  </repository>
   </repositories>
   
   <properties>
@@ -94,7 +106,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <start-class>com.scc.daemon.Application</start-class>
     <docker.image.name>anthonydenecheau/scc-onlinedogshow-daemon</docker.image.name>
-    <docker.image.tag>version1.0</docker.image.tag>
+	<docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
   </properties>
 
   <build>
