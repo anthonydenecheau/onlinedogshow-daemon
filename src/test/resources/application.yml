@@ -44,4 +44,6 @@ spring:
 example:
   property: "I AM IN THE DEFAULT"
 
-fixedDelay.in.milliseconds : "30000"
+fixedDelay:
+  in:
+    milliseconds : "30000"
